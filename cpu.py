@@ -113,21 +113,24 @@ class CPU:
             if command == JNE:
                 # If `E` flag is clear (false, 0), jump to the address stored in the given
                 # register.
-                if self.ef is False:
+                if self.ef is 0:
                     reg = self.ram[self.pc + 1]
                     self.pc = self.reg[reg]
                     print("JNE activated")
                 else:
+                    self.pc += 2
                     print("JNE not activated")
 
             if command == JEQ:
                 # If `equal` flag is set (true), jump to the address stored in the given register.
-                if self.ef is True:
+                if self.ef is not 0:
                     reg = self.ram[self.pc + 1]
                     self.pc = self.reg[reg]
                     print("JEQ activated")
                 else:
+                    self.pc += 2
                     print("JEQ not activated")
+                    # sys.exit(0)
 
             if command == CMP:
                 # Compare the values in two registers.
@@ -139,7 +142,7 @@ class CPU:
                     self.pc += 1
                     print('ef + 1')
                 else:
-                    self.ef = 0
+                    # self.ef = 0
                     self.pc += 1
                 # * If registerA is less than registerB, set the Less-than `L` flag to 1,
                 # otherwise set it to 0.
@@ -150,17 +153,17 @@ class CPU:
                 else:
                     self.ltf = 0
                     self.pc += 1
-                # * If registerA is greater than registerB, set the Greater-than `G` flag
-                # to 1, otherwise set it to 0.
-                if reg_a > reg_b:
-                    self.gtf = 1
-                    self.pc += 1
-                    print('gtf + 1')
-                else:
-                    self.gtf = 0
-                    self.pc += 1
+                # # * If registerA is greater than registerB, set the Greater-than `G` flag
+                # # to 1, otherwise set it to 0.
+                # if reg_a > reg_b:
+                #     self.gtf = 1
+                #     self.pc += 1
+                #     print('gtf + 1')
+                # else:
+                #     self.gtf = 0
+                #     self.pc += 1
 
-                self.pc += 2
+                self.pc += 1
 
             if command == JMP:
                 # Jump to the address stored in the given register.
