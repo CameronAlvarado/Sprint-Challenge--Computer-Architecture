@@ -97,6 +97,7 @@ class CPU:
         ADD = 0b10100000
 
         CMP = 0b10100111
+        JMP = 0b01010100
 
         while True:
             # This is the Instruction Register as 'command'
@@ -114,20 +115,35 @@ class CPU:
                 # * If they are equal, set the Equal `E` flag to 1, otherwise set it to 0.
                 if self.reg[reg_a] == self.reg[reg_b]:
                     self.ef = 1
+                    self.pc += 1
                 else:
                     self.ef = 0
+                    self.pc += 1
                 # * If registerA is less than registerB, set the Less-than `L` flag to 1,
                 # otherwise set it to 0.
                 if self.reg[reg_a] < self.reg[reg_b]:
                     self.ltf = 1
+                    self.pc += 1
                 else:
                     self.ltf = 0
+                    self.pc += 1
                 # * If registerA is greater than registerB, set the Greater-than `G` flag
                 # to 1, otherwise set it to 0.
                 if self.reg[reg_a] > self.reg[reg_b]:
                     self.gtf = 1
+                    self.pc += 1
                 else:
                     self.gtf = 0
+                    self.pc += 1
+
+                # self.pc += 3
+
+            if command == JMP:
+                # Jump to the address stored in the given register.
+                reg = self.ram[self.pc + 1]
+
+                # Set the `PC` to the address stored in the given register.
+                self.pc = self.reg[reg]
 
             if command == CAL:
                 # Calls a subroutine (function) at the address stored in the register.
