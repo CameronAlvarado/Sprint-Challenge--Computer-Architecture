@@ -98,6 +98,7 @@ class CPU:
 
         CMP = 0b10100111
         JMP = 0b01010100
+        JEQ = 0b01010101
 
         while True:
             # This is the Instruction Register as 'command'
@@ -107,6 +108,12 @@ class CPU:
             #  op_b needs to read next 2 bytes after PC
             operand_b = self.ram_read(self.pc + 2)
             # print('Running ---', IR)
+
+            if command == JEQ:
+                # If `equal` flag is set (true), jump to the address stored in the given register.
+                if self.ef:
+                    reg = self.ram[self.pc + 1]
+                    self.pc = self.reg[reg]
 
             if command == CMP:
                 # Compare the values in two registers.
