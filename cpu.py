@@ -12,6 +12,9 @@ class CPU:
         self.pc = 0
         self.fl = 0
         self.sp = 7
+        self.ef = 0
+        self.ltf = 0
+        self.gtf = 0
 
     def ram_read(self, mar):
         return self.ram[mar]
@@ -93,6 +96,8 @@ class CPU:
         RET = 0b00010001
         ADD = 0b10100000
 
+        CMP = 0b10100111
+
         while True:
             # This is the Instruction Register as 'command'
             command = self.ram_read(self.pc)
@@ -101,6 +106,29 @@ class CPU:
             #  op_b needs to read next 2 bytes after PC
             operand_b = self.ram_read(self.pc + 2)
             # print('Running ---', IR)
+
+            if command == CMP:
+                # Compare the values in two registers.
+                reg_a = self.ram[self.pc + 1]
+                reg_b = self.ram[self.pc + 2]
+                # * If they are equal, set the Equal `E` flag to 1, otherwise set it to 0.
+                if self.reg[reg_a] == self.reg[reg_b]:
+                    self.ef = 1
+                else:
+                    self.ef = 0
+                # * If registerA is less than registerB, set the Less-than `L` flag to 1,
+                # otherwise set it to 0.
+                if self.reg[reg_a] < self.reg[reg_b]:
+                    self.ltf = 1
+                else:
+                    self.ltf = 0
+                # * If registerA is greater than registerB, set the Greater-than `G` flag
+                # to 1, otherwise set it to 0.
+                if self.reg[reg_a] > self.reg[reg_b]:
+                    self.gtf = 1
+                else:
+                    self.gtf = 0
+
             if command == CAL:
                 # Calls a subroutine (function) at the address stored in the register.
 
