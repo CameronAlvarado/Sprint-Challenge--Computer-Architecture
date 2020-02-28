@@ -125,28 +125,31 @@ class CPU:
 
             if command == CMP:
                 # Compare the values in two registers.
-                reg_a = self.ram[self.pc + 1]
-                reg_b = self.ram[self.pc + 2]
+                reg_a = self.reg[operand_a]
+                reg_b = self.reg[operand_b]
                 # * If they are equal, set the Equal `E` flag to 1, otherwise set it to 0.
-                if self.reg[reg_a] == self.reg[reg_b]:
+                if reg_a == reg_b:
                     self.ef = 1
                     self.pc += 1
+                    print('ef + 1')
                 else:
                     self.ef = 0
                     self.pc += 1
                 # * If registerA is less than registerB, set the Less-than `L` flag to 1,
                 # otherwise set it to 0.
-                if self.reg[reg_a] < self.reg[reg_b]:
+                if reg_a < reg_b:
                     self.ltf = 1
                     self.pc += 1
+                    print('ltf + 1')
                 else:
                     self.ltf = 0
                     self.pc += 1
                 # * If registerA is greater than registerB, set the Greater-than `G` flag
                 # to 1, otherwise set it to 0.
-                if self.reg[reg_a] > self.reg[reg_b]:
+                if reg_a > reg_b:
                     self.gtf = 1
                     self.pc += 1
+                    print('gtf + 1')
                 else:
                     self.gtf = 0
                     self.pc += 1
