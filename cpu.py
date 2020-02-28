@@ -116,12 +116,18 @@ class CPU:
                 if self.ef is False:
                     reg = self.ram[self.pc + 1]
                     self.pc = self.reg[reg]
+                    print("JNE activated")
+                else:
+                    print("JNE not activated")
 
             if command == JEQ:
                 # If `equal` flag is set (true), jump to the address stored in the given register.
-                if self.ef:
+                if self.ef is True:
                     reg = self.ram[self.pc + 1]
                     self.pc = self.reg[reg]
+                    print("JEQ activated")
+                else:
+                    print("JEQ not activated")
 
             if command == CMP:
                 # Compare the values in two registers.
@@ -154,7 +160,7 @@ class CPU:
                     self.gtf = 0
                     self.pc += 1
 
-                # self.pc += 3
+                self.pc += 2
 
             if command == JMP:
                 # Jump to the address stored in the given register.
@@ -240,18 +246,21 @@ class CPU:
             if command == PRN:
                 # PRN: register pseudo-instruction
                 # print numeric value stored in given register
-                print(self.reg[operand_a])
+                print()
+                print(f"***PRINTING***", self.reg[operand_a])
+                print()
                 # self.trace()
                 print("Register:", self.reg)
                 print("PC", self.pc)
                 self.pc += 2
 
             else:
-                self.trace()
-                # print("------------------")
-                # print("IR, 130 = LDI =>", command)
-                # print("PC", self.pc)
-                # print("reg", self.reg)
-                # print("op_a", operand_a)
-                # print("op_b", operand_b)
-                # print("------------------")
+                # self.trace()
+                print("------------------")
+                print("IR, 130 = LDI =>", command)
+                print("PC", self.pc)
+                print("reg", self.reg)
+                print("Equal", self.ef)
+                print("op_a", operand_a)
+                print("op_b", operand_b)
+                print("------------------")
