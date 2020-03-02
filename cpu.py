@@ -257,13 +257,13 @@ class CPU:
                 print("PC", self.pc)
                 self.pc += 2
 
-            else:
-                # self.trace()
-                print("------------------")
-                print("IR, 130 = LDI =>", command)
-                print("PC", self.pc)
-                print("reg", self.reg)
-                print("Equal", self.ef)
-                print("op_a", operand_a)
-                print("op_b", operand_b)
-                print("------------------")
+            # else:
+            #     # self.trace()
+            #     print("------------------")
+            #     print("IR, 130 = LDI =>", command)
+            #     print("PC", self.pc)
+            #     print("reg", self.reg)
+            #     print("Equal", self.ef)
+            #     print("op_a", operand_a)
+            #     print("op_b", operand_b)
+            #     print("------------------")
